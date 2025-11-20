@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界语字帖生成器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌎 世界语字帖生成器</h1>
+        </header>
+        
+        <main>
+            <div class="control-panel">
+                <div class="panel-section">
+                    <h2>📄 页面设置</h2>
+                    <div class="setting-group">
+                        <label>上边距: <span id="marginTopValue">50</span>px</label>
+                        <input type="range" id="marginTop" min="0" max="100" value="50">
+                    </div>
+                    <div class="setting-group">
+                        <label>下边距: <span id="marginBottomValue">50</span>px</label>
+                        <input type="range" id="marginBottom" min="0" max="100" value="50">
+                    </div>
+                    <div class="setting-group">
+                        <label>左边距: <span id="marginLeftValue">50</span>px</label>
+                        <input type="range" id="marginLeft" min="0" max="100" value="50">
+                    </div>
+                    <div class="setting-group">
+                        <label>右边距: <span id="marginRightValue">50</span>px</label>
+                        <input type="range" id="marginRight" min="0" max="100" value="50">
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h2>📏 线条设置</h2>
+                    <div class="setting-group">
+                        <label for="lineType">线型:</label>
+                        <select id="lineType">
+                            <option value="solid">实线</option>
+                            <option value="dashed">虚线</option>
+                            <option value="dotted">点线</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="lineColor">线条颜色:</label>
+                        <select id="lineColor">
+                            <option value="#999999">浅灰</option>
+                            <option value="#666666">灰色</option>
+                            <option value="#333333">深灰</option>
+                            <option value="#000000">黑色</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label>线条粗细: <span id="lineWidthValue">1</span>px</label>
+                        <input type="range" id="lineWidth" min="1" max="5" value="1">
+                    </div>
+                    <div class="setting-group">
+                        <label>行间距: <span id="lineHeightValue">40</span>px</label>
+                        <input type="range" id="lineHeight" min="20" max="80" value="40">
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h2>✍️ 文字设置</h2>
+                    <div class="setting-group">
+                        <label for="fontFamily">字体:</label>
+                        <select id="fontFamily">
+                            <option value="Calibri, sans-serif">Calibri 斜体</option>
+                        </select>
+                    </div>
+                    <div id="font-warning" class="font-warning" style="display: none; color: #ffcc00; margin: 10px 0;">
+                        警告：当前选择的字体可能不支持世界语特殊字符的正确显示
+                    </div>
+                    <div class="setting-group">
+                        <label>字号: <span id="fontSizeValue">20</span>px</label>
+                        <input type="range" id="fontSize" min="10" max="40" value="20">
+                    </div>
+                    <div class="setting-group">
+                        <label for="textColor">文字颜色:</label>
+                        <select id="textColor">
+                            <option value="#000000">黑色</option>
+                            <option value="#333333">深灰</option>
+                            <option value="#666666">灰色</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="textAlign">对齐方式:</label>
+                        <select id="textAlign">
+                            <option value="left">左对齐</option>
+                            <option value="center">居中</option>
+                            <option value="right">右对齐</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h2>📝 内容设置</h2>
+                    <div class="setting-group">
+                        <label for="textContent">字帖内容:</label>
+                        <textarea id="textContent" rows="6"></textarea>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <button id="resetButton">🔄 重置设置</button>
+                    <button id="exportPdf">💾 导出PDF</button>
+                </div>
+            </div>
+            
+            <div class="preview-panel">
+                <div class="page-navigation">
+                    <button id="prevPage" disabled>⬅️ 上一页</button>
+                    <span id="pageInfo">第 <span id="currentPage">1</span> 页 / 共 <span id="totalPages">1</span> 页</span>
+                    <button id="nextPage">下一页 ➡️</button>
+                </div>
+                <div class="worksheet-container">
+                    <svg id="worksheet" width="827" height="1169" viewBox="0 0 827 1169">
+                        <!-- Worksheet content will be generated here -->
+                    </svg>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- 引入PDF导出所需的库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // 确保库在全局作用域可用
+        window.addEventListener('load', function() {
+            if (typeof jspdf === 'undefined' && typeof window.jspdf === 'undefined') {
+                console.warn('jsPDF library failed to load');
+            }
+            if (typeof html2canvas === 'undefined' && typeof window.html2canvas === 'undefined') {
+                console.warn('html2canvas library failed to load');
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
