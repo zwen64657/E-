@@ -489,7 +489,7 @@ const defaultSettings = {
     textAlign: 'left',
     
     // 内容设置
-    content: 'Saluton mondo! Ĉi tio estas ekzemplo de esperanta teksto por la lernantoj skribi. Mi esperas, ke vi povos lerni Esperanton facile kaj amuze! Bonan ŝancon!\n\n世界语(Esperanto)是一种国际辅助语言，由波兰医生柴门霍夫博士(L. L. Zamenhof)于1887年创立。'
+    content: ''
 };
 
 // 重置所有设置为默认值
@@ -659,6 +659,9 @@ function changePage(direction) {
 
 // 初始化应用
 function init() {
+    // 设置默认内容到textarea
+    textContent.value = defaultSettings.content;
+
     updateValueDisplays();
     initEventListeners();
     generateWorksheet();
